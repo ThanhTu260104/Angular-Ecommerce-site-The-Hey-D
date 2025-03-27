@@ -1,0 +1,65 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+    <div class="max-w-lg w-full text-center">
+        <!-- 404 Animation -->
+        <div class="mb-8">
+            <svg class="w-64 h-64 mx-auto animate-float" viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                    stroke="#4B5563" stroke-width="2" />
+                <path
+                    d="M9 9C9 9.55228 8.55228 10 8 10C7.44772 10 7 9.55228 7 9C7 8.44772 7.44772 8 8 8C8.55228 8 9 8.44772 9 9Z"
+                    fill="#4B5563" />
+                <path
+                    d="M17 9C17 9.55228 16.5523 10 16 10C15.4477 10 15 9.55228 15 9C15 8.44772 15.4477 8 16 8C16.5523 8 17 8.44772 17 9Z"
+                    fill="#4B5563" />
+                <path
+                    d="M16 16H8C7.44772 16 7 15.5523 7 15C7 14.4477 7.44772 14 8 14H16C16.5523 14 17 14.4477 17 15C17 15.5523 16.5523 16 16 16Z"
+                    fill="#4B5563" />
+            </svg>
+        </div>
+
+        <!-- Error Message with Animation -->
+        <h1
+            class="text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-4 animate-pulse">
+            404
+        </h1>
+        <h2 class="text-3xl font-semibold text-gray-700 mb-4">Oops! Trang không tồn tại</h2>
+        <p class="text-gray-600 mb-8">Trang bạn đang tìm kiếm có thể đã bị xóa, đổi tên hoặc tạm thời không khả dụng.
+        </p>
+
+        <!-- Action Buttons with Improved Styling -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a routerLink="/"
+                class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-purple-600 hover:to-blue-600 transition-all duration-300 inline-flex items-center justify-center gap-2 transform hover:scale-105">
+                <i class="fas fa-home"></i>
+                Về trang chủ
+            </a>
+            <button onclick="history.back()"
+                class="px-6 py-3 bg-white text-gray-700 rounded-lg hover:bg-gray-100 transition-all duration-300 inline-flex items-center justify-center gap-2 shadow-md hover:shadow-lg transform hover:scale-105">
+                <i class="fas fa-arrow-left"></i>
+                Quay lại
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    @keyframes float {
+        0% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-20px);
+        }
+
+        100% {
+            transform: translateY(0px);
+        }
+    }
+
+    .animate-float {
+        animation: float 3s ease-in-out infinite;
+    }
+</style>

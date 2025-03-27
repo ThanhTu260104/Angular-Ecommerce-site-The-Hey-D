@@ -1,0 +1,97 @@
+<header class="relative overflow-hidden">
+    <img src="https://images.unsplash.com/photo-1484807352052-23338990c6c6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="banner" class="h-screen object-cover w-full">
+    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+        <div class="text-center text-white">
+            <h1 class="text-5xl font-bold mb-4">Welcome to Our Shop</h1>
+            <p class="text-xl">Discover amazing products at great prices</p>
+        </div>
+    </div>
+</header>
+
+<main class="container mx-auto px-4 py-8">
+    <app-hot-product></app-hot-product>
+</main>
+
+<main class="container mx-auto px-4 py-8">
+    <app-new-product></app-new-product>
+</main>
+<!-- Section Giới Thiệu -->
+<section class="bg-white py-12">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">Về Chúng Tôi</h2>
+        <div class="flex flex-col md:flex-row items-center gap-8">
+            <div class="md:w-1/2">
+                <img src="https://res.cloudinary.com/dba9gnba5/image/upload/v1742843479/Frame_99_nt2rbq.png"
+                    alt="About Us" class="rounded-lg shadow-lg">
+            </div>
+            <div class="md:w-1/2">
+                <h3 class="text-2xl font-semibold mb-4">Câu Chuyện Của The Hey D Store</h3>
+                <p class="text-gray-600 mb-4">Chúng tôi tự hào mang đến những sản phẩm chất lượng cao và dịch vụ tận tâm
+                    cho khách hàng.</p>
+                <ul class="space-y-2">
+                    <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> Sản phẩm chất lượng cao
+                    </li>
+                    <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> Dịch vụ khách hàng 24/7
+                    </li>
+                    <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> Giao hàng nhanh chóng</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Theo Dõi -->
+<section class="bg-gray-100 py-12">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-8">Theo Dõi Chúng Tôi</h2>
+        <p class="text-gray-600 mb-6">Đăng ký nhận thông tin mới nhất về sản phẩm và ưu đãi</p>
+        <div class="max-w-md mx-auto">
+            <form class="flex gap-4">
+                <input type="email" placeholder="Nhập email của bạn"
+                    class="flex-1 px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-gray-500">
+                <button
+                    class="bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition duration-300 ease-in-out transform hover:scale-105">Đăng
+                    Ký</button>
+            </form>
+        </div>
+        <div class="mt-8 flex justify-center gap-6">
+            <a href="#" class="text-gray-600 hover:text-gray-900"><i class="fab fa-facebook text-2xl"></i></a>
+            <a href="#" class="text-gray-600 hover:text-gray-900"><i class="fab fa-twitter text-2xl"></i></a>
+            <a href="#" class="text-gray-600 hover:text-gray-900"><i class="fab fa-instagram text-2xl"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- Section Tin Tức -->
+<section class="bg-white py-12">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">Tin Tức & Sự Kiện</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <article class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://picsum.photos/400/250" alt="News 1" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">Xu Hướng Mới Nhất</h3>
+                    <p class="text-gray-600 mb-4">Khám phá những xu hướng mới nhất trong ngành công nghiệp.</p>
+                    <a href="#" class="text-gray-900 hover:underline">Đọc thêm →</a>
+                </div>
+            </article>
+            <article class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://picsum.photos/400/251" alt="News 2" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">Sự Kiện Sắp Tới</h3>
+                    <p class="text-gray-600 mb-4">Những sự kiện đặc biệt và ưu đãi sắp diễn ra.</p>
+                    <a href="#" class="text-gray-900 hover:underline">Đọc thêm →</a>
+                </div>
+            </article>
+            <article class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://picsum.photos/400/252" alt="News 3" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">Câu Chuyện Thành Công</h3>
+                    <p class="text-gray-600 mb-4">Chia sẻ từ những khách hàng hài lòng của chúng tôi.</p>
+                    <a href="#" class="text-gray-900 hover:underline">Đọc thêm →</a>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>

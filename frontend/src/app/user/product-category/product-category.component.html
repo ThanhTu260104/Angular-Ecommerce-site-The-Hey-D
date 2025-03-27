@@ -1,0 +1,73 @@
+<section class="new-products  py-16">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl text-center font-bold mb-12 relative">
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400">Sản phẩm trong
+                loại</span>
+
+
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <article *ngFor="let sp of sp_arr"
+                class="group bg-white rounded-xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300">
+                <!-- New tag -->
+                <!-- <div class="absolute -left-2 -top-2 z-10">
+                    <div
+                        class="bg-gradient-to-r from-blue-500 to-emerald-500 text-white px-4 py-1 rounded-lg shadow-lg">
+                        NEW
+                    </div>
+                </div> -->
+
+                <!-- Discount tag -->
+                <div class="absolute -right-2 -top-2 z-10">
+                    <div
+                        class="bg-gradient-to-r from-red-500 to-pink-500 text-white px-4 py-1 rounded-lg shadow-lg transform rotate-12">
+                        -{{((sp.gia - sp.gia_km) / sp.gia * 100).toFixed(0)}}%
+                    </div>
+                </div>
+
+                <!-- Image container -->
+                <div class="relative overflow-hidden rounded-t-xl">
+                    <img [src]="sp.hinh" [alt]="sp.ten_sp"
+                        class="w-full h-64 object-cover transform group-hover:scale-110 transition duration-500" />
+                    <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-40 transition-opacity"></div>
+                </div>
+
+                <!-- Content -->
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors">
+                        {{sp.ten_sp}}
+                    </h3>
+
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-2xl font-extrabold text-blue-600">{{formatPrice(sp.gia_km)}}</span>
+                        <span class="text-sm text-gray-400 line-through">{{formatPrice(sp.gia)}}</span>
+                    </div>
+
+                    <!-- Views and rating -->
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center space-x-1">
+                            <i class="fas fa-eye text-gray-400"></i>
+                            <span class="text-sm text-gray-500">{{sp.luot_xem}}k views</span>
+                        </div>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <button class="buy-button w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium 
+                    py-3 px-4 rounded-lg transform hover:scale-105 transition-all duration-300 
+                    flex items-center justify-center gap-2">
+                        <i class="fas fa-shopping-cart"></i>
+                        Mua ngay
+                    </button>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>

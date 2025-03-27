@@ -1,0 +1,84 @@
+<div class="container mx-auto px-4 py-8 mb-40 mt-20">
+    <h2 class="text-3xl font-bold mb-8 text-gray-800">Giỏ hàng của bạn</h2>
+
+    <div *ngIf="listSP.length > 0" class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Tên sản phẩm</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Số lượng</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Đơn giá</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Thành tiền</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <tr *ngFor="let sp of listSP" class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <img [src]="sp.hinh" class="w-12 h-12 rounded object-cover mr-4" />
+                                <span class="font-medium text-gray-800">{{sp.ten_sp}}</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center space-x-2">
+                                <button (click)="suaSoLuong(sp.id, sp.so_luong - 1)" [disabled]="sp.so_luong <= 1"
+                                    class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100">-</button>
+                                <input type="number" [(ngModel)]="sp.so_luong" (change)="suaSoLuong(sp.id, sp.so_luong)"
+                                    class="w-12 text-center" min="1">
+                                <button (click)="suaSoLuong(sp.id, sp.so_luong + 1)"
+                                    class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100">+</button>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-gray-600">{{sp.gia_mua | number:'1.0-0'}}₫</td>
+                        <td class="px-6 py-4 font-medium text-gray-800">{{sp.gia_mua * sp.so_luong | number:'1.0-0'}}₫
+                        </td>
+                        <td class="px-6 py-4">
+                            <button (click)="xoaSanPham(sp.id)" class="text-red-500 hover:text-red-700 mr-3">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="p-8 bg-gray-50 border-t border-gray-200">
+            <div class="mx-auto">
+                <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
+                    <div class="text-gray-600 bg-white px-6 py-4 rounded-lg shadow-sm w-full lg:w-auto">
+                        <span class="text-sm uppercase tracking-wide">Tổng tiền:</span>
+                        <span class="block text-3xl font-bold text-gray-800 mt-1">
+                            {{getTotalAmount() | number:'1.0-0'}}₫
+                        </span>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                        <button (click)="xoaGioHang()"
+                            class="px-6 py-3 bg-red-50 text-red-600 font-medium rounded-lg hover:bg-red-100 transition-colors flex items-center justify-center gap-2">
+                            <i class="fas fa-trash-alt"></i>
+                            <span>Xoá giỏ hàng</span>
+                        </button>
+                        <button routerLink="/payment"
+                            class="px-8 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-medium rounded-lg hover:from-gray-700 hover:to-gray-800 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Thanh toán ngay</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col items-center justify-center h-[60vh]" *ngIf="listSP.length === 0">
+        <div class="text-3xl font-bold text-gray-800">Giỏ hàng rỗng</div>
+        <div class="text-gray-600 mt-4">Bạn không có sản phẩm nào trong giỏ hàng của mình.</div>
+        <div class="mt-8">
+            <a routerLink="/products"
+                class="px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-medium rounded-lg hover:from-gray-700 hover:to-gray-800 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Tiếp tục mua sắm</span>
+            </a>
+        </div>
+    </div>
+</div>

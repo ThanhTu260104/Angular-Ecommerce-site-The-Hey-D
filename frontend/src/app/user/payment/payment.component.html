@@ -1,0 +1,46 @@
+<div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+    <div class="relative py-3 sm:max-w-xl sm:mx-auto">
+        <div class="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
+            <div class="max-w-md mx-auto">
+                <div class="divide-y divide-gray-200">
+                    <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+                        <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Thanh toán đơn hàng</h2>
+
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Họ và tên</label>
+                            <input [(ngModel)]="donhang.ho_ten" name="ht"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                type="text" placeholder="Nhập họ tên của bạn">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                            <input [(ngModel)]="donhang.email" name="email"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                type="email" placeholder="example@email.com">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Ghi chú</label>
+                            <textarea [(ngModel)]="donhang.ghi_chu" name="gc"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                rows="3" placeholder="Nhập ghi chú nếu có"></textarea>
+                        </div>
+
+                        <div class="pt-4 flex items-center space-x-4">
+                            <button (click)="luudonhang()"
+                                class="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none hover:bg-blue-600 transition-colors">
+                                Xác nhận thanh toán
+                            </button>
+                        </div>
+
+                        <div *ngIf="thong_bao" class="mt-4 p-4 rounded-md" [ngClass]="{'bg-red-100 text-red-700': thong_bao.includes('Chưa'), 
+                         'bg-green-100 text-green-700': !thong_bao.includes('Chưa')}">
+                            {{thong_bao}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

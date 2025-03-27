@@ -1,0 +1,74 @@
+<section class="hot-products py-16">
+    <div class="container mx-auto px-4">
+        <!-- Section Header -->
+        <header class="text-center mb-12">
+            <h2 class="text-4xl font-extrabold relative inline-block">
+                <span class="text-black">
+                    Sản phẩm nổi bật
+                </span>
+            </h2>
+        </header>
+
+        <!-- Product Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <article *ngFor="let sp of sp_arr"
+                class="product-card group bg-white rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-4 transition-all duration-300">
+
+                <!-- Discount Badge -->
+                <div class="absolute -right-2 -top-2 z-10">
+                    <div
+                        class="discount-badge bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-lg shadow-lg transform rotate-12">
+                        -{{((sp.gia - sp.gia_km) / sp.gia * 100).toFixed(0)}}%
+                    </div>
+                </div>
+
+                <!-- Product Image -->
+                <a href="/product-detail/{{sp.id}}">
+                    <div class="product-image relative overflow-hidden rounded-t-xl">
+                        <img [src]="sp.hinh" [alt]="sp.ten_sp"
+                            class="w-full h-64 object-cover transform group-hover:scale-110 transition duration-500" />
+                        <div
+                            class="overlay absolute inset-0 bg-black opacity-0 group-hover:opacity-40 transition-opacity">
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product Info -->
+                <div class="product-info p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3 group-hover:text-gray-600 transition-colors">
+                        {{sp.ten_sp}}
+                    </h3>
+
+                    <!-- Price -->
+                    <div class="price-container flex items-center gap-3 mb-4">
+                        <span class="text-2xl font-bold text-gray-600">{{formatPrice(sp.gia_km)}}</span>
+                        <span class="text-sm text-gray-500 line-through">{{formatPrice(sp.gia)}}</span>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="product-stats flex items-center justify-between mb-6">
+                        <div class="views flex items-center space-x-1">
+                            <i class="fas fa-eye text-gray-400"></i>
+                            <span class="text-sm text-gray-500">{{sp.luot_xem}}k views</span>
+                        </div>
+                        <div class="rating flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+
+                    <!-- Action Button -->
+                    <button (click)="this.cartService.themVaoGio(sp)" class="buy-button w-full text-white bg-gray-950 font-medium 
+                                    py-3 px-4 rounded-lg transform hover:scale-105 transition-all duration-300 
+                                    flex items-center justify-center gap-2 hover:bg-indigo-700">
+                        <i class="fas fa-shopping-cart"></i>
+                        Thêm vào giỏ
+                    </button>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>

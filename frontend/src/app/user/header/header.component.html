@@ -1,0 +1,104 @@
+<header class="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <img src="https://res.cloudinary.com/dba9gnba5/image/upload/v1742867270/Blue_Orange_Modern_Illustration_House_Professional_Real_Estate_Logo_400_x_400_px_2_om7fkv.png"
+                    alt="" class="h-16 w-16 sm:h-20 sm:w-20">
+            </div>
+
+            <!-- Desktop/Tablet Menu -->
+            <nav class="hidden lg:flex space-x-6">
+                <a routerLink="/" class="text-gray-600 hover:text-gray-900">Trang chủ</a>
+                <a routerLink="/product" class="text-gray-600 hover:text-gray-900">Sản phẩm</a>
+                <!-- <a routerLink="/services" class="text-gray-600 hover:text-gray-900">Dịch vụ</a> -->
+                <a routerLink="/news" class="text-gray-600 hover:text-gray-900">Tin tức</a>
+                <a routerLink="/contact" class="text-gray-600 hover:text-gray-900">Liên hệ</a>
+                <a routerLink="/about-us" class="text-gray-600 hover:text-gray-900">Về chúng tôi</a>
+            </nav>
+
+            <!-- Right side items -->
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <!-- Search - show on tablet and up -->
+                <div class="relative hidden sm:block">
+                    <input type="text" placeholder="Tìm kiếm..."
+                        class="pl-8 pr-4 py-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 w-[150px] lg:w-auto">
+                    <svg class="w-4 h-4 absolute left-2 top-2 text-gray-500" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+
+                <!-- Welcome message - show on large screens only -->
+                <span class="text-gray-600 hidden lg:block">The Hey D xin chào Huy!</span>
+
+                <!-- Cart Icon -->
+                <div class="relative">
+                    <a href="/cart" class="text-gray-600 hover:text-gray-950">
+                        <button class="p-2 hover:text-gray-950">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            <!-- <span
+                                class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-4 h-4">0</span> -->
+                        </button>
+                    </a>
+                </div>
+
+                <!-- User Dropdown -->
+                <div class="relative">
+                    <button class="p-2 hover:text-stone-900" (click)="isDropdownOpen = !isDropdownOpen">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </button>
+                    <div *ngIf="isDropdownOpen" class="absolute right-0 mt-5 w-48 bg-white rounded-md shadow-lg py-1">
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Đăng nhập</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Đăng ký</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Thông tin tài
+                            khoản</a>
+                    </div>
+                </div>
+
+                <!-- Mobile/Tablet Menu Button -->
+                <button class="lg:hidden p-2" (click)="toggleMobileMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path *ngIf="!isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path *ngIf="isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile/Tablet Menu Panel -->
+        <div *ngIf="isMobileMenuOpen" class="lg:hidden py-2 bg-white border-t">
+            <nav class="flex flex-col space-y-2">
+                <a routerLink="/" class="px-4 py-2 text-gray-600 hover:bg-gray-100">Trang chủ</a>
+                <a routerLink="/product" class="px-4 py-2 text-gray-600 hover:bg-gray-100">Sản phẩm</a>
+                <a routerLink="/news" class="px-4 py-2 text-gray-600 hover:bg-gray-100">Tin tức</a>
+                <a routerLink="/contact" class="px-4 py-2 text-gray-600 hover:bg-gray-100">Liên hệ</a>
+                <a routerLink="/about-us" class="px-4 py-2 text-gray-600 hover:bg-gray-100">Về chúng tôi</a>
+            </nav>
+        </div>
+
+        <!-- Mobile search bar - show only on mobile -->
+        <div class="sm:hidden py-2">
+            <div class="relative">
+                <input type="text" placeholder="Tìm kiếm..."
+                    class="w-full pl-8 pr-4 py-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500">
+                <svg class="w-4 h-4 absolute left-2 top-2 text-gray-500" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
+        </div>
+    </div>
+</header>
