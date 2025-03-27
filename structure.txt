@@ -1,0 +1,72 @@
+angular-project/
+│── src/
+│   ├── app/
+│   │   ├── core/                    # Các service, interceptor dùng chung
+│   │   │   ├── services/
+│   │   │   │   ├── auth.service.ts
+│   │   │   │   ├── user.service.ts
+│   │   │   │   ├── admin.service.ts
+│   │   │   ├── guards/
+│   │   │   │   ├── auth.guard.ts
+│   │   │   │   ├── admin.guard.ts
+│   │   │   ├── interceptors/
+│   │   │   │   ├── auth.interceptor.ts
+│   │   │   ├── core.module.ts
+│   │   │   ├── index.ts
+│   │   │
+│   │   ├── shared/                  # Component, directive, pipe dùng chung
+│   │   │   ├── components/
+│   │   │   │   ├── header/
+│   │   │   │   ├── footer/
+│   │   │   ├── directives/
+│   │   │   ├── pipes/
+│   │   │   ├── shared.module.ts
+│   │   │
+│   │   ├── auth/                     # Xác thực (login, register)
+│   │   │   ├── login/
+│   │   │   │   ├── login.component.ts
+│   │   │   │   ├── login.component.html
+│   │   │   ├── register/
+│   │   │   │   ├── register.component.ts
+│   │   │   │   ├── register.component.html
+│   │   │   ├── auth.module.ts
+│   │   │
+│   │   ├── admin/                    # Khu vực admin
+│   │   │   ├── dashboard/
+│   │   │   │   ├── dashboard.component.ts
+│   │   │   │   ├── dashboard.component.html
+│   │   │   ├── users/
+│   │   │   │   ├── users.component.ts
+│   │   │   │   ├── users.component.html
+│   │   │   ├── settings/
+│   │   │   │   ├── settings.component.ts
+│   │   │   │   ├── settings.component.html
+│   │   │   ├── admin-routing.module.ts
+│   │   │   ├── admin.module.ts
+│   │   │
+│   │   ├── user/                      # Khu vực user
+│   │   │   ├── profile/
+│   │   │   │   ├── profile.component.ts
+│   │   │   │   ├── profile.component.html
+│   │   │   ├── home/
+│   │   │   │   ├── home.component.ts
+│   │   │   │   ├── home.component.html
+│   │   │   ├── user-routing.module.ts
+│   │   │   ├── user.module.ts
+│   │   │
+│   │   ├── app-routing.module.ts
+│   │   ├── app.component.ts
+│   │   ├── app.module.ts
+│   │
+│   ├── assets/
+│   ├── environments/
+│   │   ├── environment.ts
+│   │   ├── environment.prod.ts
+│   │
+│   ├── index.html
+│   ├── main.ts
+│   ├── styles.scss
+│   ├── angular.json
+│
+├── package.json
+├── tsconfig.json
