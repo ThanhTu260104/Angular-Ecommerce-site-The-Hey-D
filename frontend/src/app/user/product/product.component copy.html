@@ -1,127 +1,155 @@
 <div class="bg-gray-50 min-h-screen py-10 mt-16">
     <div class="container mx-auto px-4">
-        <h1 class="text-4xl font-bold text-center mb-12">Sản Phẩm</h1>
+        <!-- Phần Bộ Sưu Tập Mới (Giữ nguyên từ mã HTML gốc) -->
+        <section class="mb-16 bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="grid md:grid-cols-2 items-center">
+                <div class="p-10 space-y-6">
+                    <h1 class="text-4xl font-bold text-gray-800">Bộ Sưu Tập Mới</h1>
+                    <p class="text-gray-600 text-lg">Khám phá những xu hướng thời trang mới nhất với các sản phẩm độc
+                        đáo và phong cách.</p>
+                    <div class="flex space-x-4">
+                        <button class="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition">
+                            Khám Phá Ngay
+                        </button>
+                        <button
+                            class="border border-black text-black px-6 py-3 rounded-lg hover:bg-gray-100 transition">
+                            Xem Chi Tiết
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <img src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="Collection" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </section>
 
         <!-- Filters Section -->
-        <div class="mb-8 bg-white p-6 rounded-lg shadow-md">
+        <section class="mb-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <!-- Category Filter -->
-                <div class="flex flex-col">
-                    <label class="text-gray-700 font-medium mb-2">Danh mục</label>
-                    <select class="border rounded-lg p-2">
-                        <option value="">Tất cả</option>
-                        <option value="ao">Áo</option>
-                        <option value="quan">Quần</option>
-                        <option value="giay">Giày</option>
-                        <option value="phu-kien">Phụ kiện</option>
-                    </select>
+                <!-- Danh Mục -->
+                <div class="bg-white rounded-2xl shadow-md p-6">
+                    <h3 class="text-lg font-semibold mb-4">Danh Mục</h3>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-2" *ngFor="let loai of loai_arr">
+                            <input type="radio" name="category" [value]="loai.ten" [(ngModel)]="filters.category"
+                                (change)="applyFilters()" class="form-radio text-blue-600">
+                            <span>{{loai.ten}}</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="category" value="" [(ngModel)]="filters.category"
+                                (change)="applyFilters()" class="form-radio text-blue-600">
+                            <span>Tất Cả</span>
+                        </label>
+                    </div>
                 </div>
 
-                <!-- Price Range Filter -->
-                <div class="flex flex-col">
-                    <label class="text-gray-700 font-medium mb-2">Khoảng giá</label>
-                    <select class="border rounded-lg p-2">
-                        <option value="">Tất cả</option>
-                        <option value="0-100000">Dưới 100.000đ</option>
-                        <option value="100000-300000">100.000đ - 300.000đ</option>
-                        <option value="300000-500000">300.000đ - 500.000đ</option>
-                        <option value="500000-up">Trên 500.000đ</option>
-                    </select>
+                <!-- Khoảng Giá -->
+                <div class="bg-white rounded-2xl shadow-md p-6">
+                    <h3 class="text-lg font-semibold mb-4">Khoảng Giá</h3>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="priceRange" value="under200" [(ngModel)]="filters.priceRange"
+                                (change)="applyFilters()" class="form-radio text-blue-600">
+                            <span>Dưới 200,000đ</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="priceRange" value="200to500" [(ngModel)]="filters.priceRange"
+                                (change)="applyFilters()" class="form-radio text-blue-600">
+                            <span>200,000đ - 500,000đ</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="priceRange" value="over500" [(ngModel)]="filters.priceRange"
+                                (change)="applyFilters()" class="form-radio text-blue-600">
+                            <span>Trên 500,000đ</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="priceRange" value="" [(ngModel)]="filters.priceRange"
+                                (change)="applyFilters()" class="form-radio text-blue-600">
+                            <span>Tất Cả</span>
+                        </label>
+                    </div>
                 </div>
 
-                <!-- Discount Filter -->
-                <div class="flex flex-col">
-                    <label class="text-gray-700 font-medium mb-2">Giảm giá</label>
-                    <select class="border rounded-lg p-2">
-                        <option value="">Tất cả</option>
-                        <option value="10">Giảm 10% trở lên</option>
-                        <option value="30">Giảm 30% trở lên</option>
-                        <option value="50">Giảm 50% trở lên</option>
-                    </select>
+                <!-- Màu Sắc -->
+                <div class="bg-white rounded-2xl shadow-md p-6">
+                    <h3 class="text-lg font-semibold mb-4">Màu Sắc</h3>
+                    <div class="flex space-x-3">
+                        <button *ngFor="let color of ['Đen', 'Xanh', 'Trắng', 'Đỏ']" class="w-8 h-8 rounded-full"
+                            [ngClass]="{
+                                'bg-black': color === 'Đen',
+                                'bg-blue-500': color === 'Xanh', 
+                                'bg-white border': color === 'Trắng',
+                                'bg-red-500': color === 'Đỏ',
+                                'ring-2 ring-blue-500': filters.color === color
+                            }" (click)="filters.color = filters.color === color ? '' : color; applyFilters()"></button>
+                    </div>
                 </div>
 
-                <!-- Sort Filter -->
-                <div class="flex flex-col">
-                    <label class="text-gray-700 font-medium mb-2">Sắp xếp</label>
-                    <select class="border rounded-lg p-2">
-                        <option value="newest">Mới nhất</option>
-                        <option value="price-asc">Giá tăng dần</option>
-                        <option value="price-desc">Giá giảm dần</option>
-                        <option value="discount">Giảm giá nhiều</option>
+                <!-- Sắp Xếp -->
+                <div class="bg-white rounded-2xl shadow-md p-6">
+                    <h3 class="text-lg font-semibold mb-4">Sắp Xếp</h3>
+                    <select class="w-full rounded-lg border-gray-300 focus:ring-blue-500" [(ngModel)]="filters.sort"
+                        (change)="applyFilters()">
+                        <option value="newest">Mới Nhất</option>
+                        <option value="priceAsc">Giá Thấp Đến Cao</option>
+                        <option value="priceDesc">Giá Cao Đến Thấp</option>
                     </select>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Product Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <article *ngFor="let sp of sp_arr"
-                class="product-card group bg-white rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-4 transition-all duration-300">
-                <!-- Discount Badge -->
-                <div class="absolute -right-2 -top-2 z-10">
-                    <div
-                        class="discount-badge bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-lg shadow-lg transform rotate-12">
-                        -{{((sp.gia - sp.gia_km) / sp.gia * 100).toFixed(0)}}%
+        <section class="grid grid-cols-4 gap-6">
+            <div *ngFor="let product of getPaginatedProducts()"
+                class="bg-white rounded-2xl shadow-md p-4 hover:shadow-xl transition">
+                <div class="relative">
+                    <img src="https://via.placeholder.com/300" alt="{{product.ten}}"
+                        class="w-full h-64 object-cover rounded-xl">
+                    <div *ngIf="product.giam_gia"
+                        class="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full">
+                        -{{product.giam_gia}}%
                     </div>
                 </div>
-
-                <!-- Product Image -->
-                <a href="/product-detail/{{sp.id}}">
-                    <div class="product-image relative overflow-hidden rounded-t-xl">
-                        <img [src]="sp.hinh" [alt]="sp.ten_sp"
-                            class="w-full h-64 object-cover transform group-hover:scale-110 transition duration-500" />
-                        <div
-                            class="overlay absolute inset-0 bg-black opacity-0 group-hover:opacity-40 transition-opacity">
+                <div class="mt-4">
+                    <h3 class="font-bold text-lg">{{product.ten}}</h3>
+                    <div class="flex justify-between items-center mt-2">
+                        <div>
+                            <p *ngIf="product.giam_gia" class="text-gray-500 line-through mr-2 inline">
+                                {{formatPrice(product.gia)}}
+                            </p>
+                            <p class="text-red-600 font-bold inline">
+                                {{formatPrice(calculateDiscountedPrice(product))}}
+                            </p>
                         </div>
+                        <button class="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800"
+                            (click)="cartService.addToCart(product)">
+                            Thêm
+                        </button>
                     </div>
-                </a>
-
-                <!-- Product Info -->
-                <div class="product-info p-6">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-3 group-hover:text-gray-600 transition-colors">
-                        {{sp.ten_sp}}
-                    </h3>
-
-                    <!-- Price -->
-                    <div class="price-container flex items-center gap-3 mb-4">
-                        <span class="text-2xl font-bold text-gray-600">{{formatPrice(sp.gia_km)}}</span>
-                        <span class="text-sm text-gray-500 line-through">{{formatPrice(sp.gia)}}</span>
-                    </div>
-
-                    <!-- Stats -->
-                    <div class="product-stats flex items-center justify-between mb-6">
-                        <div class="views flex items-center space-x-1">
-                            <i class="fas fa-eye text-gray-400"></i>
-                            <span class="text-sm text-gray-500">{{sp.luot_xem}}k views</span>
-                        </div>
-                        <div class="rating flex text-yellow-400">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                    </div>
-
-                    <!-- Action Button -->
-                    <button (click)="this.cartService.themVaoGio(sp)"
-                        class="buy-button w-full text-white bg-gray-950 font-medium py-3 px-4 rounded-lg transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 hover:bg-indigo-700">
-                        <i class="fas fa-shopping-cart"></i>
-                        Thêm vào giỏ
-                    </button>
                 </div>
-            </article>
-        </div>
+            </div>
+        </section>
 
         <!-- Pagination -->
-        <div class="mt-12 flex justify-center">
-            <nav class="flex items-center space-x-2">
-                <button class="px-4 py-2 border rounded-lg hover:bg-gray-50">Previous</button>
-                <button class="px-4 py-2 border rounded-lg bg-stone-900 text-white">1</button>
-                <button class="px-4 py-2 border rounded-lg hover:bg-gray-50">2</button>
-                <button class="px-4 py-2 border rounded-lg hover:bg-gray-50">3</button>
-                <button class="px-4 py-2 border rounded-lg hover:bg-gray-50">Next</button>
-            </nav>
-        </div>
+        <section class="mt-16 flex justify-center space-x-4">
+            <button class="px-6 py-3 bg-white text-gray-800 rounded-full shadow-md hover:bg-gray-100 transition"
+                [disabled]="page === 1" (click)="changePage(page - 1)">
+                Trước
+            </button>
+            <div class="flex space-x-2">
+                <button *ngFor="let pageNum of [].constructor(getTotalPages()); let i = index"
+                    class="px-5 py-3 rounded-full shadow-md" [ngClass]="{
+                        'bg-gray-900 text-white': page === i + 1, 
+                        'bg-white text-gray-800 hover:bg-gray-100': page !== i + 1
+                    }" (click)="changePage(i + 1)">
+                    {{i + 1}}
+                </button>
+            </div>
+            <button class="px-6 py-3 bg-white text-gray-800 rounded-full shadow-md hover:bg-gray-100 transition"
+                [disabled]="page === getTotalPages()" (click)="changePage(page + 1)">
+                Sau
+            </button>
+        </section>
     </div>
 </div>

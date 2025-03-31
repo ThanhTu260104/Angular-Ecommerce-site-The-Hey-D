@@ -30,8 +30,12 @@
                     </svg>
                 </div>
 
+
                 <!-- Welcome message - show on large screens only -->
-                <span class="text-gray-600 hidden lg:block">The Hey D xin chào Huy!</span>
+                <span class="text-gray-600 hidden lg:block" *ngIf="ho_ten">
+                    Xin chào {{ ho_ten.split(' ').slice(-1)[0] }}!
+                </span>
+
 
                 <!-- Cart Icon -->
                 <div class="relative">
@@ -58,10 +62,14 @@
                         </svg>
                     </button>
                     <div *ngIf="isDropdownOpen" class="absolute right-0 mt-5 w-48 bg-white rounded-md shadow-lg py-1">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Đăng nhập</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Đăng ký</a>
+                        <a href="/login" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Đăng
+                            nhập</a>
+                        <a href="/register" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Đăng ký</a>
+                        <a href="/change-pass" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Đổi mật
+                            khẩu</a>
                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Thông tin tài
                             khoản</a>
+
                     </div>
                 </div>
 

@@ -1,6 +1,11 @@
 const express = require("express");
-var app = express(); //tạo ứng dụng nodejs
+const bcrypt = require('bcryptjs');
+const validator = require('validator');
+const dotenv = require("dotenv");
+var app = express(); 
 const port = 3005;
+require('dotenv').config(); // hoặc dotenv.config();
+
 app.use(express.json()); //cho phép đọc dữ liệu dạng json
 const cors = require("cors");
 app.use(cors()); //cho phép mọi nguồi bên ngoài request đến ứnd dụng
@@ -10,10 +15,10 @@ const {
   TinTucModel,
   DonHangChiTietModel,
   DonHangModel,
+  UserModel,
 } = require("./config/database"); //các model lấy database
 
 //routes
-
 // Lấy danh sách loại sản phẩm
 app.get("/api/loai", async (req, res) => {
   const loai_arr = await LoaiModel.findAll({
@@ -35,33 +40,43 @@ app.get("/api/loai/:id", async (req, res) => {
 //GET http://localhost:5000/api/sanpham?category=shoes&sort=price_asc
 
 app.get("/api/sanpham", async (req, res) => {
-  let { page, limit, category, sort, hot } = req.query;
+  let { page, limit, category, sort, minPrice, maxPrice } = req.query;
   page = parseInt(page) || 1;
-  limit = parseInt(limit) || 16; // mặc định hiện 10 sản phẩm
+  limit = parseInt(limit) || 12;
+  
   let whereClause = { an_hien: 1 };
   if (category) whereClause.id_loai = category;
-  let order = [];
-  if (sort === "asc") order = [["gia", "ASC"]]; //sắp xếp tăng dần
-  else if (sort === "desc") order = [["gia", "DESC"]]; //sắp xếp giảm dần
-  else
-    order = [
-      ["ngay", "DESC"],
-      ["gia", "ASC"],
-    ];
-  // sắp xếp theo ngày mới nhất và giá tăng dần
-  if (hot === "1") {
-    whereClause.hot = 1;
-  } else {
-    whereClause.hot = 0;
+  
+  // Add price range filter
+  if (minPrice && maxPrice) {
+    whereClause.gia = {
+      [Op.between]: [parseInt(minPrice), parseInt(maxPrice)]
+    };
   }
+
+  let order = [];
+  if (sort === "asc") order = [["gia", "ASC"]];
+  else if (sort === "desc") order = [["gia", "DESC"]];
+  else order = [["ngay", "DESC"], ["gia", "ASC"]];
+
   const offset = (page - 1) * limit;
-  const sp_arr = await SanPhamModel.findAll({
+
+  // Get total count
+  const total = await SanPhamModel.count({ where: whereClause });
+  
+  const items = await SanPhamModel.findAll({
     where: whereClause,
     order: order,
     offset: offset,
     limit: limit,
   });
-  res.json(sp_arr);
+
+  res.json({
+    items,
+    total,
+    page,
+    limit
+  });
 });
 
 // lấy danh sách sản phẩm hot
@@ -174,6 +189,7 @@ app.post("/api/luugiohang/", async (req, res) => {
     });
 });
 
+
 // app.get("/api/timkiem", async (req, res) => {
 //   try {
 //     const tu_khoa = req.query.tu_khoa || "";
@@ -199,6 +215,161 @@ app.post("/api/luugiohang/", async (req, res) => {
 //     res.status(500).json({ message: "Lỗi server" });
 //   }
 // });
+
+/* -------- Đăng ký ------ */
+app.post(`/api/dangky`, async (req, res)=>{
+  let {email, mat_khau, go_lai_mat_khau, ho_ten} = req.body;
+  
+    // 1. Kiểm tra rỗng
+    if (!email || !mat_khau || !go_lai_mat_khau || !ho_ten) {
+      return res.json({ thong_bao: "Vui lòng nhập đầy đủ tất cả thông tin." });
+    }
+  
+    // 2. Kiểm tra độ dài họ tên
+    if (ho_ten.length < 2 || ho_ten.length > 50) {
+      return res.json({ thong_bao: "Họ tên phải từ 2 đến 50 ký tự." });
+    }
+  
+    // 3. Kiểm tra định dạng email
+    if (!validator.isEmail(email)) {
+      return res.json({ thong_bao: "Email không hợp lệ." });
+    }
+  
+    // 4. Kiểm tra độ dài email
+    if (email.length > 100) {
+      return res.json({ thong_bao: "Email quá dài. Tối đa 100 ký tự." });
+    }
+  
+    // 5. Kiểm tra mật khẩu mạnh
+    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    if (!strongPasswordRegex.test(mat_khau)) {
+      return res.json({ 
+        thong_bao: "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt."
+      });
+    }
+  
+    // 6. Mật khẩu nhập lại phải khớp
+    if (mat_khau !== go_lai_mat_khau) {
+      return res.json({ thong_bao: "Mật khẩu nhập lại không khớp." });
+    }
+  
+    // 7. Kiểm tra email đã tồn tại
+    try {
+      const existingUser = await UserModel.findOne({ where: { email } }); // SELECT * FROM users WHERE email = email
+
+      if (existingUser) {
+        return res.json({ thong_bao: "Email đã được sử dụng để đăng ký." });
+      }
+    } catch (err) {
+      return res.json({ thong_bao: "Lỗi kiểm tra email", err });
+    }
+   // 8. Mã hóa và lưu
+   try {
+    const salt = bcrypt.genSaltSync(10);
+    const mk_mahoa = bcrypt.hashSync(mat_khau, salt);
+
+    const user = await UserModel.create({
+      email,
+      ho_ten,
+      mat_khau: mk_mahoa
+    });
+    res.json({ thong_bao: "Đăng ký thành công", user });
+  } catch (err) {
+    res.json({ thong_bao: "Lỗi lưu người dùng", err });
+  }
+})
+
+
+/* ----- Đăng nhập ----- */
+app.post('/api/dangnhap', async (req, res) => {
+  const { email, mat_khau } = req.body;
+
+  // 1. Kiểm tra input
+  if (!email || !mat_khau) {
+    return res.json({ thong_bao: "Vui lòng nhập đầy đủ email và mật khẩu." });
+  }
+
+  // 2. Kiểm tra định dạng email
+  if (!validator.isEmail(email)) {
+    return res.status(400).json({ thong_bao: "Email không hợp lệ." });
+  }
+
+  // 3. Tìm user
+  const user = await UserModel.findOne({ where: { email } });
+  if (!user) {
+    return res.status(401).json({ thong_bao: "Email không tồn tại." });
+  }
+
+  // 4. Kiểm tra mật khẩu
+  const kq = bcrypt.compareSync(mat_khau, user.mat_khau);
+  if (!kq) {
+    return res.status(401).json({ thong_bao: "Mật khẩu không đúng." });
+  }
+
+  // 5. Tạo JWT
+  const jwt = require('jsonwebtoken');
+  const payload = {
+    email: user.email,
+    ho_ten: user.ho_ten,
+    id: user.id
+  };
+  const PRIVATE_KEY = process.env.JWT_SECRET || "fallback-secret";
+  const maxAge = "3h";
+
+  const bearerToken = jwt.sign(payload, PRIVATE_KEY, {
+    expiresIn: maxAge,
+    subject: user.id + ""
+  });
+
+  // 6. Trả kết quả
+  res.status(200).json({
+    thong_bao: "Đăng nhập thành công",
+    token: bearerToken,
+    expiresIn: maxAge,
+    info: {
+      email: user.email,
+      ho_ten: user.ho_ten
+    }
+  });
+});
+
+
+app.post('/api/doipass', async (req, res) => {
+  let { email, pass_old, pass_new1, pass_new2 } = req.body;
+  const authHeader = req.headers['authorization'];
+  if (!authHeader) return res.status(403).json({ thong_bao: 'Token không hợp lệ' });
+  
+  const token = authHeader.split(' ')[1];
+  const fs = require('fs');
+  let private_key = fs.readFileSync("private-key.txt");
+  const jwt = require("node-jsonwebtoken");
+  let decoded;
+  
+  try {
+    decoded = jwt.verify(token, private_key);
+  } catch (err) {
+    return res.status(403).json({ thong_bao: 'Token hết hạn hoặc không hợp lệ' });
+  }
+
+  let id = decoded.id;
+  const user = await UserModel.findByPk(id);
+  let mk_trongdb = user.mat_khau;
+  const bcrypt = require("bcryptjs");
+  let kq = bcrypt.compareSync(pass_old, mk_trongdb);
+  
+  if (kq == false)
+    return res.status(403).json({ "thong_bao": "Mật khẩu không đúng" });
+  if (pass_new1 != "" && pass_new1 != pass_new2)
+    return res.json({ "thong_bao": "2 Mật khẩu mới không khớp" });
+
+  const salt = bcrypt.genSaltSync(10);
+  let mk_mahoa = bcrypt.hashSync(pass_new1, salt); // mã hóa mật khẩu
+
+  await UserModel.update({ mat_khau: mk_mahoa }, { where: { id: id } });
+
+  res.status(200).json({ "thong_bao": "Đã cập nhật" });
+});
+
 
 app
   .listen(port, () => {

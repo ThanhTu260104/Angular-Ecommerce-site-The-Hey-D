@@ -28,10 +28,14 @@
                         </div>
 
                         <div class="pt-4 flex items-center space-x-4">
-                            <button (click)="luudonhang()"
-                                class="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none hover:bg-blue-600 transition-colors">
-                                Xác nhận thanh toán
+
+                            <button [disabled]="dang_xu_ly" (click)="luudonhang()"
+                                class="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none hover:bg-blue-600 transition-colors"
+                                [ngClass]="{'opacity-50 cursor-not-allowed': dang_xu_ly}">
+                                {{ dang_xu_ly ? 'Đang xử lý...' : 'Xác nhận thanh toán' }}
                             </button>
+
+
                         </div>
 
                         <div *ngIf="thong_bao" class="mt-4 p-4 rounded-md" [ngClass]="{'bg-red-100 text-red-700': thong_bao.includes('Chưa'), 

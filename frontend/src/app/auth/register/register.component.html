@@ -1,1 +1,65 @@
-<p>register works!</p>
+<div class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Đăng Ký</h2>
+        <form #f="ngForm" name="form" (ngSubmit)="dangky()">
+            <div class="mb-4">
+                <label for="fullName" class="block text-gray-700 text-sm font-bold mb-2">Họ và Tên</label>
+                <!-- Dùng [(ngModel)] để liên kết dữ liệu 2 chiều giữa input và biến user.ho_ten trong component TypeScript. -->
+                <input type="text" id="fullName" name="fullName" required [(ngModel)]="user.ho_ten"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Nhập họ và tên">
+            </div>
+
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                <!-- Dùng [(ngModel)] để liên kết dữ liệu 2 chiều giữa input và biến user.ho_ten trong component TypeScript. -->
+                <input type="email" id="email" name="email" required [(ngModel)]="user.email"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Nhập địa chỉ email">
+            </div>
+
+            <div class="mb-4">
+                <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Mật Khẩu</label>
+                <!-- Dùng [(ngModel)] để liên kết dữ liệu 2 chiều giữa input và biến user.ho_ten trong component TypeScript. -->
+                <input type="password" id="password" name="password" required [(ngModel)]="user.mat_khau"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Nhập mật khẩu">
+            </div>
+
+            <div class="mb-6">
+                <label for="confirmPassword" class="block text-gray-700 text-sm font-bold mb-2">Xác Nhận Mật
+                    Khẩu</label>
+                <!-- Dùng [(ngModel)] để liên kết dữ liệu 2 chiều giữa input và biến user.ho_ten trong component TypeScript. -->
+                <input type="password" id="confirmPassword" name="confirmPassword" required
+                    [(ngModel)]="user.go_lai_mat_khau"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Nhập lại mật khẩu">
+            </div>
+
+            <!-- Thêm div thay cho thẻ <b> để hiển thị thông báo -->
+            <div *ngIf="thong_bao" role="alert" aria-live="polite"
+                class="mt-4 text-center px-4 py-3 mb-4 rounded-md font-semibold transition-all duration-500 ease-in-out shadow-sm"
+                [ngClass]="{
+                  'bg-green-100 text-green-700': !errcolor,
+                  'bg-red-100 text-red-700': errcolor
+                }">
+                <div class="flex items-center justify-center space-x-2">
+                    <span *ngIf="!errcolor">✅</span>
+                    <span *ngIf="errcolor">❌</span>
+                    <span>{{ thong_bao }}</span>
+                </div>
+                <div *ngIf="!errcolor" class="text-sm font-normal mt-1 text-green-600">
+                    Đang chuyển đến trang đăng nhập trong 5 giây...
+                </div>
+            </div>
+            <!-- Dùng (click) để bắt sự kiện submit -->
+            <button type="submit"
+                class=" w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300">
+                Đăng Ký
+            </button>
+
+
+
+        </form>
+    </div>
+</div>

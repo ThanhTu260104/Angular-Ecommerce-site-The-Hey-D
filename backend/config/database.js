@@ -114,6 +114,16 @@ const DonHangChiTietModel = sequelize.define(
   },
   { timestamps: false, tableName: "don_hang_chi_tiet" }
 );
+const UserModel = sequelize.define('users', { 
+  id :{type:DataTypes.INTEGER ,primaryKey:true, autoIncrement:true }, 
+  email: {type: DataTypes.STRING, require:true },
+  mat_khau: {type: DataTypes.STRING, require:true },
+  ho_ten: { type: DataTypes.STRING , require:true}, 
+  vai_tro: { type: DataTypes.TINYINT , defaultValue:0}, 
+  khoa: {type: DataTypes.TINYINT , defaultValue:0}
+}, { timestamps:false, tableName:"users" }
+);
+
 
 // Định nghĩa mối quan hệ
 SanPhamModel.hasOne(ThuocTinhModel, {
@@ -139,4 +149,4 @@ LoaiModel.hasMany(SanPhamModel, {
   as: "san_pham",
 });
 
-module.exports = { SanPhamModel, LoaiModel, DonHangModel, DonHangChiTietModel };
+module.exports = { SanPhamModel, LoaiModel, DonHangModel, DonHangChiTietModel, UserModel, ThuocTinhModel, sequelize };

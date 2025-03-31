@@ -1,0 +1,60 @@
+<div class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md bg-white p-8 rounded-xl shadow-2xl">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Đổi Mật Khẩu</h2>
+
+        <form class="space-y-6">
+            <!-- Email Input -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <input type="email" id="email" disabled [(ngModel)]="user.email" name="email"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Email của bạn" />
+            </div>
+
+            <!-- Mật khẩu cũ -->
+            <input type="password" id="old-password" [(ngModel)]="user.pass_old" name="old-password"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Nhập mật khẩu cũ" />
+
+            <!-- Mật khẩu mới -->
+            <input type="password" id="new-password" [(ngModel)]="user.pass_new1" name="new-password"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Nhập mật khẩu mới" />
+
+            <!-- Xác nhận mật khẩu mới -->
+            <input type="password" id="confirm-password" [(ngModel)]="user.pass_new2" name="confirm-password"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Nhập lại mật khẩu mới" />
+
+            <!-- Nút Đổi Mật Khẩu -->
+            <div>
+                <button type="button" (click)="doipass()"
+                    class="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out">
+                    Đổi Mật Khẩu
+                </button>
+            </div>
+        </form>
+
+        <!-- Thông báo -->
+        <div *ngIf="thong_bao" class="mt-4 text-center px-4 py-2 rounded-md font-semibold"
+            [ngClass]="{ 'bg-red-100 text-red-700': errcolor, 'bg-green-100 text-green-700': !errcolor }">
+            <div class="flex items-center justify-center space-x-2">
+                <span *ngIf="errcolor">❌</span>
+                <span *ngIf="!errcolor">✅</span>
+                <span>{{ thong_bao }}</span>
+            </div>
+        </div>
+
+        <!-- Thông báo chuyển trang -->
+        <div *ngIf="thong_bao && errcolor && thong_bao === 'Bạn chưa đăng nhập!'" class="text-sm mt-1 text-gray-600">
+            Đang chuyển hướng đến trang đăng nhập...
+        </div>
+
+        <!-- Liên kết quay lại -->
+        <div class="text-center mt-4">
+            <a href="#" class="text-blue-600 hover:underline text-sm">
+                Quay lại trang chủ
+            </a>
+        </div>
+    </div>
+</div>

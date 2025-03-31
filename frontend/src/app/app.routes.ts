@@ -4,6 +4,7 @@ import { ContactComponent } from './user/contact/contact.component';
 import { NotfoundComponent } from './user/notfound/notfound.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { ChangePassComponent} from './auth/change-pass/change-pass.component';
 import { ProductCategoryComponent } from './user/product-category/product-category.component';
 import { ProductDetailComponent } from './user/product-detail/product-detail.component';
 import { CartComponent } from './user/cart/cart.component';
@@ -11,6 +12,8 @@ import { PaymentComponent } from './user/payment/payment.component';
 import { ProductComponent } from './user/product/product.component';
 import { AboutUsComponent } from './user/about-us/about-us.component';
 import { NewsComponent } from './user/news/news.component';
+import { authGuard } from './auth/auth.guard';
+
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, title: 'Trang chủ' },
@@ -25,11 +28,13 @@ export const routes: Routes = [
     component: ProductCategoryComponent,
     title: 'Sản phẩm trong loại',
   },
+  {path: 'change-pass', component: ChangePassComponent, title: 'Đổi mật khẩu',canActivate: [authGuard]},
   {
     path: 'product-detail/:id',
     component: ProductDetailComponent,
     title: 'Chi tiết sản phẩm',
   },
+ 
   { path: 'about-us', component: AboutUsComponent, title: 'Về chúng tôi' },
   { path: 'product', component: ProductComponent, title: 'Sản phẩm' },
   { path: 'cart', component: CartComponent, title: 'Giỏ hàng' },

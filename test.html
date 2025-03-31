@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Hotspots</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f9f9f9;
+        }
+
+        .image-container {
+            position: relative;
+            display: inline-block;
+            margin: 40px auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .product-image {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .hotspot-wrapper {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hotspot {
+            width: 26px;
+            height: 26px;
+            background-color: crimson;
+            color: white;
+            font-weight: bold;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 26px;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .hotspot:hover {
+            background-color: darkred;
+            transform: scale(1.1);
+        }
+
+        .info-box {
+            margin-top: 8px;
+            background-color: white;
+            padding: 12px 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            display: none;
+            z-index: 10;
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 220px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .hotspot-wrapper:hover .info-box {
+            display: block;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 15px;
+            color: #333;
+        }
+
+        .info-box p {
+            margin: 0;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="image-container">
+        <img class="product-image"
+            src="https://plus.unsplash.com/premium_photo-1732017765181-3b0f972778a3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMzN8fHxlbnwwfHx8fHw%3D"
+            alt="Ảnh sản phẩm" />
+
+        <!-- Hotspot 1: Camera -->
+        <div class="hotspot-wrapper" style="top: 40%; left: 60%;">
+            <div class="hotspot">+</div>
+            <div class="info-box">
+                <strong>Camera Sony Alpha</strong>
+                <p>Độ phân giải: 24MP<br />Quay phim 4K<br />Giá: 25 triệu VNĐ</p>
+            </div>
+        </div>
+
+        <!-- Hotspot 2: Laptop -->
+        <div class="hotspot-wrapper" style="top: 70%; left: 30%;">
+            <div class="hotspot">+</div>
+            <div class="info-box">
+                <strong>MacBook Pro</strong>
+                <p>Chip M2<br />RAM 16GB, SSD 512GB<br />Giá: 45 triệu VNĐ</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
