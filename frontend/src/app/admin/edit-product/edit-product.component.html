@@ -1,0 +1,122 @@
+<main class="flex-1 p-8">
+    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-sm">
+      <div class="px-6 py-4 border-b border-gray-200">
+        <h2 class="text-xl font-semibold">Sửa sản phẩm</h2>
+      </div>
+
+      <form class="p-6 space-y-6" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+        <!-- Tên sản phẩm -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Tên sản phẩm</label>
+          <input type="text" name="ten_sp" [(ngModel)]="sanpham.ten_sp" class="mt-1 block w-full border rounded-md p-2"/>
+        </div>
+
+        <!-- Giá và Giá khuyến mãi -->
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Giá</label>
+            <input type="number" name="gia" [(ngModel)]="sanpham.gia" class="mt-1 block w-full border rounded-md p-2"/>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Giá khuyến mãi</label>
+            <input type="number" name="gia_km" [(ngModel)]="sanpham.gia_km" class="mt-1 block w-full border rounded-md p-2"/>
+          </div>
+        </div>
+
+        <!-- Mô tả -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Mô tả</label>
+          <textarea name="mo_ta" rows="4" [(ngModel)]="sanpham.mo_ta" class="mt-1 block w-full border rounded-md p-2"></textarea>
+        </div>
+
+        <!-- Loại sản phẩm -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Loại sản phẩm</label>
+          <select id="id_loai" name="id_loai" [(ngModel)]="sanpham.id_loai"
+                  class="mt-1 block w-full border rounded-md p-2">
+            <option value="">-- Chọn loại --</option>
+            <option *ngFor="let loai of loai_arr" [value]="loai.id">
+              {{loai.ten_loai}}
+            </option>
+          </select>
+        </div>
+
+        <!-- Thuộc tính -->
+        <div class="grid grid-cols-3 gap-4">
+          <div>
+            <label class="block text-sm text-gray-700">RAM</label>
+            <input type="text" name="thuoc_tinh[ram]" [(ngModel)]="thuoc_tinh.ram" class="mt-1 block w-full border rounded-md p-2"/>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-700">CPU</label>
+            <input type="text" name="thuoc_tinh[cpu]" [(ngModel)]="thuoc_tinh.cpu" class="mt-1 block w-full border rounded-md p-2"/>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-700">Ổ cứng</label>
+            <input type="text" name="thuoc_tinh[dia_cung]" [(ngModel)]="thuoc_tinh.dia_cung" class="mt-1 block w-full border rounded-md p-2"/>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm text-gray-700">Màu sắc</label>
+            <input type="text" name="thuoc_tinh[mau_sac]" [(ngModel)]="thuoc_tinh.mau_sac" class="mt-1 block w-full border rounded-md p-2"/>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-700">Cân nặng</label>
+            <input type="text" name="thuoc_tinh[can_nang]" [(ngModel)]="thuoc_tinh.can_nang" class="mt-1 block w-full border rounded-md p-2"/>
+          </div>
+        </div>
+
+        <!-- Trạng thái và Hot -->
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Trạng thái hiển thị</label>
+            <select name="an_hien" [(ngModel)]="sanpham.an_hien" class="mt-1 block w-full border rounded-md p-2">
+              <option value="1">Hiển thị</option>
+              <option value="0">Ẩn</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Sản phẩm HOT?</label>
+            <select name="hot" [(ngModel)]="sanpham.hot" class="mt-1 block w-full border rounded-md p-2">
+              <option value="1">Có</option>
+              <option value="0">Không</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Ảnh sản phẩm -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Ảnh đại diện</label>
+          <input type="file" name="image" id="imageInput" accept="image/*" (change)="onImageChange($event)"
+            class="mt-1 block w-full text-sm text-gray-600 border border-gray-300 rounded-md p-2" />
+          <div class="mt-4">
+            <img [src]="previewUrl" class="max-h-48 rounded-md border" />
+          </div>
+        </div>
+
+        <!-- Nút -->
+        <div class="flex justify-end gap-3">
+          <a href="/admin/product" class="px-4 py-2 bg-gray-100 rounded-md hover:bg-gray-200">Hủy</a>
+          <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+            Cập nhật
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    // Preview ảnh trước khi submit
+    const imageInput = document.getElementById("imageInput");
+    const imagePreview = document.getElementById("imagePreview");
+
+    imageInput.addEventListener("change", () => {
+      const file = imageInput.files[0];
+      if (file) {
+        imagePreview.src = URL.createObjectURL(file);
+      } else {
+        imagePreview.src = "";
+      }
+    });
+  </script>

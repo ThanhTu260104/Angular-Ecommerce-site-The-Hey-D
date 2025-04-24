@@ -1,0 +1,232 @@
+<main class="flex-1 overflow-y-auto">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="flex items-center justify-between px-6 py-4">
+            <h1 class="text-xl font-semibold">Quản lý sản phẩm</h1>
+            <div class="flex space-x-2">
+                <a href="/admin/create-product"
+                    class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
+                    <i class="fas fa-plus mr-2"></i>Thêm sản phẩm
+                </a>
+                <button class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+                    <i class="fas fa-file-excel mr-2"></i>Xuất Excel
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="p-6">
+        <!-- Filter -->
+        <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="col-span-2">
+                    <app-search (search)="onSearch($event)"></app-search>
+                </div>
+                <div>
+                    <select class="w-full border rounded-lg px-4 py-2 focus:border-indigo-500"
+                            [(ngModel)]="selectedCategory"
+                            (ngModelChange)="onCategoryChange($event)">
+                        <option [value]="0">Tất cả danh mục</option>
+                        <option *ngFor="let loai of loai_arr" [value]="loai.id">{{loai.ten_loai}}</option>
+                    </select>
+                </div>
+                <div>
+                    <select class="w-full border rounded-lg px-4 py-2 focus:border-indigo-500"
+                            [(ngModel)]="selectedPriceSort"
+                            (ngModelChange)="onPriceSortChange($event)">
+                        <option value="">Giá</option>
+                        <option value="asc">Tăng dần</option>
+                        <option value="desc">Giảm dần</option>
+                    </select>
+                </div>
+                <div>
+                    <select class="w-full border rounded-lg px-4 py-2 focus:border-indigo-500"
+                            [(ngModel)]="selectedAnHien"
+                            (ngModelChange)="onAnHienChange($event)">
+                        <option [ngValue]="-1">Tất cả trạng thái</option>
+                        <option [ngValue]="1">Hiển thị</option>
+                        <option [ngValue]="0">Ẩn</option>
+                    </select>
+                </div>
+                <div>
+                    <select class="w-full border rounded-lg px-4 py-2 focus:border-indigo-500"
+                            [(ngModel)]="selectedHot"
+                            (ngModelChange)="onHotChange($event)">
+                        <option [ngValue]="-1">Tất cả nổi bật</option>
+                        <option [ngValue]="1">Nổi bật</option>
+                        <option [ngValue]="0">Không nổi bật</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Table -->
+        <div class="bg-white rounded-lg shadow-sm">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Sản phẩm
+                            </th>
+                       
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Danh mục
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Giá</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Mô tả
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Trạng
+                                thái</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ngày 
+                            </th>
+                        
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Thao tác
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr class="hover:bg-gray-50" *ngFor="let sp of sp_arr">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <img src="{{sp.hinh}}"
+                                        class="w-12 h-12 rounded-lg object-cover mr-4">
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900">{{sp.ten_sp}}</div>
+                                        <div class=" text-sm text-gray-500">{{sp.slug}}</div>
+                                        <div class="text-sm text-gray-500">ATB:  <span *ngIf="sp.thuoc_tinh">
+                                            {{ sp.thuoc_tinh.ram }},
+                                            {{ sp.thuoc_tinh.cpu }},
+                                            {{ sp.thuoc_tinh.dia_cung }},
+                                            {{ sp.thuoc_tinh.mau_sac }},
+                                            {{ sp.thuoc_tinh.can_nang }}kg
+                                          </span></div>
+                                        <div class="text-sm text-gray-500"> Lượt xem: {{sp.luot_xem}}</div>
+                                        <div class="text-sm text-gray-500">Tồn kho: 100</div>
+                                    </div>
+                                </div>
+                            </td>
+                           
+
+                            <td class="px-6 py-4 text-sm text-gray-500">{{sp.loai?.ten_loai}}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-gray-900">{{sp.gia | number:'1.0-0'}}đ</div>
+                                <div class="text-sm font-medium text-green-600">{{sp.gia_km | number:'1.0-0'}}đ</div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-900">
+                                <button (click)="showDetailProduct(sp)" class="text-sm text-blue-600 hover:text-blue-900 cursor-pointer">
+                                    <i class="fas fa-eye mr-1"></i>Xem mô tả
+                                </button>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex flex-col gap-2">
+                                    <span [class]="+sp.an_hien === 1 ? 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800' : 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800'">
+                                        <svg [class]="+sp.an_hien === 1 ? 'mr-1.5 h-2 w-2 text-green-400' : 'mr-1.5 h-2 w-2 text-red-400'" fill="currentColor" viewBox="0 0 8 8">
+                                            <circle cx="4" cy="4" r="3" />
+                                        </svg>
+                                        {{ +sp.an_hien === 1 ? 'Hiển thị' : 'Đã ẩn' }}
+                                    </span>
+                                    <span [class]="+sp.hot === 1 ? 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800' : 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800'">
+                                        <svg [class]="+sp.hot === 1 ? 'mr-1.5 h-2 w-2 text-green-400' : 'mr-1.5 h-2 w-2 text-red-400'" fill="currentColor" viewBox="0 0 8 8">
+                                            <circle cx="4" cy="4" r="3" />
+                                        </svg>
+                                        {{ +sp.hot === 1 ? 'Nổi bật' : 'Không nổi bật' }}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class=" py-4">
+                                <div class="flex flex-col gap-2">
+                                    <div class="px-6 py-4 text-sm text-gray-900">Ngày tạo: {{sp.created_at | date:'dd/MM/yyyy HH:mm'}}</div>
+                                    <div class="px-6 py-4 text-sm text-gray-900">Ngày cập nhật: {{sp.updated_at | date:'dd/MM/yyyy HH:mm'}}</div>
+                                </div>
+                            </td>
+                            <td class="px-6 ">
+                                <a routerLink="/admin/edit-product/{{sp.id}}" class="text-blue-600 hover:text-blue-900 mr-3">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <button (click)="showDeleteModalHandler(sp)" class="text-red-600 hover:text-red-900">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <app-pagination
+                [page]="page"
+                [totalPages]="totalPages"
+                (pageChange)="onPageChange($event)"
+            ></app-pagination>
+        </div>
+    </div>
+</main>
+
+<!-- Delete Modal -->
+<div *ngIf="showDeleteModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="mt-3 text-center">
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                <i class="fas fa-exclamation-triangle text-red-600"></i>
+            </div>
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Xác nhận xóa</h3>
+            <div class="mt-2 px-7 py-3">
+                <p class="text-sm text-gray-500">
+                    Bạn có chắc chắn muốn xóa sản phẩm: <br> <strong class="text-red-600">{{ selectedProduct?.ten_sp }} ?</strong>
+                  </p>
+                  <p class="text-xs text-gray-400 italic">Hành động này không thể hoàn tác.</p>
+            </div>
+            <div class="items-center px-4 py-3">
+                <button (click)="hideDeleteModal()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded mr-2">
+                    Hủy
+                </button>
+                <button (click)="selectedProduct ? deleteProduct(selectedProduct.id) : null" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+                    Xóa
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Detail Product Modal -->
+<div *ngIf="showDetailModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="flex justify-between items-center border-b pb-4">
+            <h3 class="text-lg font-semibold text-gray-800">Mô tả sản phẩm</h3>
+            <button (click)="hideDetailProduct()" class="text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="mt-4">
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <p class="text-gray-700">{{selectedProduct?.mo_ta}}</p>
+            </div>
+        </div>
+        <div class="mt-6 flex justify-end">
+            <button (click)="hideDetailProduct()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition">
+                Đóng
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- <script>
+      document.querySelector('button.md\\:hidden')?.addEventListener('click', () => {
+            document.querySelector('aside').classList.toggle('hidden');
+        });
+
+        // Delete confirmation
+        function showDeleteModal() {
+            document.getElementById('deleteModal').classList.remove('hidden');
+        }
+
+        function hideDeleteModal() {
+            document.getElementById('deleteModal').classList.add('hidden');
+        }
+        function showDetailProduct() {
+            document.getElementById('detailProduct').classList.remove('hidden');
+        }
+
+        function hideDetailProduct() {
+            document.getElementById('detailProduct').classList.add('hidden');
+        }
+</script> -->

@@ -1,0 +1,15 @@
+{
+    "users": [
+      {
+        "id": 1,
+        "name": "Trần Thanh Tú",
+        "email": "tutran@example.com"
+      },
+      {
+        "id": 2,
+        "name": "Nguyễn Văn A",
+        "email": "vana@example.com"
+      }
+    ]
+  }
+  

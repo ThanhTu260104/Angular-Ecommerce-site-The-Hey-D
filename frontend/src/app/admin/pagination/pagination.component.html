@@ -1,0 +1,40 @@
+<div class="px-6 py-4 border-t border-gray-200">
+  <div class="flex items-center justify-between">
+    <p class="text-sm text-gray-700">
+      Hiển thị 1-10 của 45 mục
+    </p>
+<div class="flex gap-2 items-center">
+    <button
+      (click)="prevPage()"
+      [disabled]="page === 1"
+      class="px-3 py-1 border rounded hover:bg-gray-50 disabled:opacity-50"
+    >
+      Trước
+    </button>
+  
+    <ng-container *ngFor="let p of visiblePages">
+      <ng-container *ngIf="p !== '...'">
+        <button
+          *ngIf="isNumber(p)"
+          (click)="goToPage(p)"
+          [class.bg-indigo-600]="p === page"
+          [class.text-white]="p === page"
+          class="px-3 py-1 border rounded hover:bg-gray-50"
+        >
+          {{ p }}
+        </button>
+      </ng-container>
+    
+      <span *ngIf="p === '...'">...</span>
+    </ng-container>
+  
+    <button
+      (click)="nextPage()"
+      [disabled]="page === totalPages"
+      class="px-3 py-1 border rounded hover:bg-gray-50 disabled:opacity-50"
+    >
+      Sau
+    </button>
+  </div>
+</div>
+</div>

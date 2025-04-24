@@ -1,0 +1,153 @@
+<main class="flex-1 p-8">
+  <div class="max-w-6xl mx-auto bg-white rounded-lg shadow-sm">
+    <div class="px-6 py-4 border-b border-gray-200">
+      <h2 class="text-l font-semibold">Thêm sản phẩm mới</h2>
+    </div>
+
+    <form #productForm="ngForm" (ngSubmit)="onSubmit()" novalidate class="p-6 space-y-6">
+      <!-- General Error Message -->
+      <div *ngIf="errorMessage" class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
+        <span class="font-medium">Lỗi!</span> {{ errorMessage }}
+      </div>
+
+      <!-- Product Info Section -->
+      <div class="space-y-4">
+        <h3 class="text-lg font-medium leading-6 text-gray-900">Thông tin sản phẩm</h3>
+
+        <!-- Tên sản phẩm -->
+        <div>
+          <label for="ten_sp" class="block text-sm font-medium text-gray-700">Tên sản phẩm <span class="text-red-500">*</span></label>
+          <input type="text" id="ten_sp" name="ten_sp" [(ngModel)]="sanpham.ten_sp"
+                 class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                 [class.border-red-500]="errors['ten_sp']" required>
+          <div *ngIf="errors['ten_sp']" class="mt-1 text-sm text-red-600">
+            {{ errors['ten_sp'] }}
+          </div>
+        </div>
+
+        <!-- Giá & Giá KM -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label for="gia" class="block text-sm font-medium text-gray-700">Giá <span class="text-red-500">*</span></label>
+            <input type="number" id="gia" name="gia" [(ngModel)]="sanpham.gia"
+                   class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                   [class.border-red-500]="errors['gia']" required min="0">
+             <div *ngIf="errors['gia']" class="mt-1 text-sm text-red-600">
+              {{ errors['gia'] }}
+            </div>
+          </div>
+          <div>
+            <label for="gia_km" class="block text-sm font-medium text-gray-700">Giá khuyến mãi</label>
+            <input type="number" id="gia_km" name="gia_km" [(ngModel)]="sanpham.gia_km"
+                   class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                   [class.border-red-500]="errors['gia_km']" min="0">
+             <div *ngIf="errors['gia_km']" class="mt-1 text-sm text-red-600">
+              {{ errors['gia_km'] }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Loại sản phẩm -->
+        <div>
+          <label for="id_loai" class="block text-sm font-medium text-gray-700">Loại sản phẩm <span class="text-red-500">*</span></label>
+          <select id="id_loai" name="id_loai" [(ngModel)]="sanpham.id_loai"
+                  class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  [class.border-red-500]="errors['id_loai']" required>
+            <option [ngValue]="null" disabled>-- Chọn loại --</option>
+            <option *ngFor="let loai of loai_arr" [value]="loai.id">{{ loai.ten_loai }}</option>
+          </select>
+           <div *ngIf="errors['id_loai']" class="mt-1 text-sm text-red-600">
+            {{ errors['id_loai'] }}
+          </div>
+        </div>
+
+        <!-- Mô tả -->
+        <div>
+          <label for="mo_ta" class="block text-sm font-medium text-gray-700">Mô tả</label>
+          <textarea id="mo_ta" name="mo_ta" [(ngModel)]="sanpham.mo_ta" rows="3"
+                    class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+        </div>
+
+        <!-- Trạng thái Switches -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+           <div class="flex items-center">
+              <input id="hot" name="hot" [(ngModel)]="sanpham.hot" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+              <label for="hot" class="ml-2 block text-sm text-gray-900">Sản phẩm Hot</label>
+            </div>
+           <div class="flex items-center">
+             <input id="an_hien" name="an_hien" [(ngModel)]="sanpham.an_hien" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+             <label for="an_hien" class="ml-2 block text-sm text-gray-900">Hiển thị</label>
+            </div>
+          <div>
+            <label for="tinh_chat" class="block text-sm font-medium text-gray-700">Tính chất</label>
+            <input type="number" id="tinh_chat" name="tinh_chat" [(ngModel)]="sanpham.tinh_chat"
+                   class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          </div>
+        </div>
+      </div>
+
+      <!-- Attributes Section -->
+       <div class="space-y-4 border-t border-gray-200 pt-6">
+         <h3 class="text-lg font-medium leading-6 text-gray-900">Thuộc tính sản phẩm</h3>
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+           <div>
+             <label for="ram" class="block text-sm font-medium text-gray-700">RAM</label>
+             <input type="text" id="ram" name="ram" [(ngModel)]="thuoc_tinh.ram" class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+           </div>
+           <div>
+             <label for="cpu" class="block text-sm font-medium text-gray-700">CPU</label>
+             <input type="text" id="cpu" name="cpu" [(ngModel)]="thuoc_tinh.cpu" class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+           </div>
+           <div>
+             <label for="dia_cung" class="block text-sm font-medium text-gray-700">Đĩa cứng</label>
+             <input type="text" id="dia_cung" name="dia_cung" [(ngModel)]="thuoc_tinh.dia_cung" class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+           </div>
+           <div>
+             <label for="mau_sac" class="block text-sm font-medium text-gray-700">Màu sắc</label>
+             <input type="text" id="mau_sac" name="mau_sac" [(ngModel)]="thuoc_tinh.mau_sac" class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+           </div>
+           <div>
+             <label for="can_nang" class="block text-sm font-medium text-gray-700">Cân nặng (kg)</label>
+             <input type="number" step="0.01" id="can_nang" name="can_nang" [(ngModel)]="thuoc_tinh.can_nang"
+                   class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                   [class.border-red-500]="errors['can_nang']" min="0">
+              <div *ngIf="errors['can_nang']" class="mt-1 text-sm text-red-600">
+                {{ errors['can_nang'] }}
+              </div>
+           </div>
+         </div>
+       </div>
+
+      <!-- Image Upload Section -->
+      <div class="space-y-4 border-t border-gray-200 pt-6">
+        <h3 class="text-lg font-medium leading-6 text-gray-900">Hình ảnh sản phẩm <span class="text-red-500">*</span></h3>
+        <div>
+          <input type="file" id="imageInput" name="hinh" accept="image/*" (change)="onImageChange($event)"
+                 class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+                 [class.border-red-500]="errors['hinh']" required>
+           <div *ngIf="errors['hinh']" class="mt-1 text-sm text-red-600">
+             {{ errors['hinh'] }}
+          </div>
+        </div>
+        <div class="mt-4" *ngIf="previewUrl">
+          <p class="text-sm font-medium text-gray-700">Xem trước:</p>
+          <img [src]="previewUrl" class="mt-2 max-h-48 rounded-md border border-gray-200" alt="Xem trước hình ảnh">
+        </div>
+        <div class="mt-4" *ngIf="!previewUrl">
+          <p class="text-sm text-gray-500">Chưa có ảnh được chọn</p>
+        </div>
+      </div>
+
+      <!-- Submit Buttons -->
+      <div class="flex justify-end gap-3 pt-6 border-t border-gray-200">
+        <button type="button" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500" [routerLink]="['/admin/product']">
+          Hủy
+        </button>
+        <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          Lưu Sản Phẩm
+        </button>
+      </div>
+
+    </form>
+  </div>
+</main>

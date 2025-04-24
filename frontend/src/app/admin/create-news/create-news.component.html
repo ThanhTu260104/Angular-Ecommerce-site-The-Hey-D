@@ -1,0 +1,54 @@
+<main class="flex-1 p-8">
+    <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-sm">
+        <div class="px-6 py-4 border-b border-gray-200">
+            <h2 class="text-xl font-semibold">Thêm tin tức mới</h2>
+        </div>
+
+        <form class="p-6" (ngSubmit)="onSubmit()">
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Tiêu đề</label>
+                    <input type="text" [(ngModel)]="news.tieu_de" name="tieu_de" placeholder="Nhập tiêu đề tin tức"
+                        class="mt-1 block w-full rounded-md border focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 p-2">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Mô tả ngắn</label>
+                    <textarea rows="3" [(ngModel)]="news.mo_ta" name="mo_ta" placeholder="Nhập mô tả ngắn"
+                        class="mt-1 block w-full rounded-md border focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 p-2"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Nội dung</label>
+                    <textarea rows="6" [(ngModel)]="news.noi_dung" name="noi_dung" placeholder="Nhập nội dung tin tức"
+                        class="mt-1 block w-full rounded-md border focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 p-2"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Hình ảnh</label>
+                    <input type="file" (change)="onFileSelected($event)" accept="image/*"
+                        class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Danh mục tin</label>
+                    <select [(ngModel)]="news.id_loai" name="id_loai"
+                        class="mt-1 block w-full rounded-md border focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 p-2"
+                        required>
+                        <option value="" disabled selected>Chọn danh mục</option>
+                        <option *ngFor="let category of categories" [value]="category.id">
+                            {{ category.ten_loai }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="flex justify-end space-x-3">
+                    <button type="button" (click)="router.navigate(['/admin/news'])"
+                        class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md">Hủy</button>
+                    <button type="submit" class="px-4 py-2 bg-indigo-600 text-white hover:bg-indigo-700 rounded-md">Thêm
+                        mới</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>

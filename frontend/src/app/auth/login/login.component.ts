@@ -49,10 +49,20 @@ export class LoginComponent {
           sessionStorage.setItem('email', data.info.email);
           sessionStorage.setItem('ho_ten', data.info.ho_ten);
           sessionStorage.setItem('expiresIn', data.expiresIn);
+          sessionStorage.setItem('vai_tro', data.info.vai_tro);
 
-          setTimeout(() => {
-            this.router.navigate(['/']);
-          }, 3000);
+          // Kiểm tra vai trò và chuyển hướng
+          if (data.info.vai_tro === 1) {
+            // Nếu là admin (vai_tro = 1)
+            setTimeout(() => {
+              this.router.navigate(['/admin/dashboard']);
+            }, 1000);
+          } else {
+            // Nếu là client (vai_tro = 0)
+            setTimeout(() => {
+              this.router.navigate(['/']);
+            }, 1000);
+          }
         }
       })
       .catch(err => {
